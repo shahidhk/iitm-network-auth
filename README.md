@@ -1,5 +1,6 @@
 iitm-network-auth
 -----------------
+[![npm version](https://badge.fury.io/js/iitm-network-auth.svg)](https://badge.fury.io/js/iitm-network-auth)
 
 npm module to authenticate against the IIT Madras campus network using openLDAP credentials
 
