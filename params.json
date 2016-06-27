@@ -1,0 +1,6 @@
+{
+  "name": "Iitm-network-auth",
+  "tagline": "Authentication library for IIT Madras campus network",
+  "body": "iitm-network-auth\r\n-----------------\r\n[![npm version](https://badge.fury.io/js/iitm-network-auth.svg)](https://badge.fury.io/js/iitm-network-auth)\r\n\r\nnpm module to authenticate against the IIT Madras campus network using openLDAP credentials\r\n\r\n## Usage\r\n\r\n- Import the module  \r\n```js\r\nvar IITMNetworkAuth = require('iitm-network-auth');\r\n```\r\n\r\n- Initialise with username and password\r\n```js\r\nvar auth = new IITMNetworkAuth('<username>', '<password>');\r\n```\r\n\r\n- Login by specifying the method  \r\nMethods that are availabe: \r\n    - `nfw`: For the new firewall login (through `https://nfw.iitm.ac.in`)\r\n    - TODO: `netaccess`: For the existing netaccess login (through `https://netaccess.iitm.ac.in`)\r\n```js\r\nauth.login('<mode>');\r\n```\r\n\r\n- Refresh authentication  \r\n```js\r\nauth.refresh()\r\n```\r\n\r\n###TODO:\r\n- Implement `netaccess` mode\r\n- Implement `auto_refresh` so that the library itself will keep on refreshing authentication\r\n- Improve error handling\r\n- Make all methods `Promise`s\r\n- Improve documentation\r\n\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}

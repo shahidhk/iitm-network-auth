@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Iitm-network-auth by shahidhk</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/shahidhk/iitm-network-auth">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/shahidhk/iitm-network-auth/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/shahidhk/iitm-network-auth/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Iitm-network-auth</h1>
+          <p>Authentication library for IIT Madras campus network</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/shahidhk">shahidhk</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h2>
+<a id="iitm-network-auth" class="anchor" href="#iitm-network-auth" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>iitm-network-auth</h2>
+
+<p><a href="https://badge.fury.io/js/iitm-network-auth"><img src="https://badge.fury.io/js/iitm-network-auth.svg" alt="npm version"></a></p>
+
+<p>npm module to authenticate against the IIT Madras campus network using openLDAP credentials</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<ul>
+<li>Import the module<br>
+</li>
+</ul>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> IITMNetworkAuth <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>iitm-network-auth<span class="pl-pds">'</span></span>);</pre></div>
+
+<ul>
+<li>Initialise with username and password</li>
+</ul>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> auth <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">IITMNetworkAuth</span>(<span class="pl-s"><span class="pl-pds">'</span>&lt;username&gt;<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>&lt;password&gt;<span class="pl-pds">'</span></span>);</pre></div>
+
+<ul>
+<li>Login by specifying the method<br>
+Methods that are availabe: 
+
+<ul>
+<li>
+<code>nfw</code>: For the new firewall login (through <code>https://nfw.iitm.ac.in</code>)</li>
+<li>TODO: <code>netaccess</code>: For the existing netaccess login (through <code>https://netaccess.iitm.ac.in</code>)</li>
+</ul>
+</li>
+</ul>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">auth</span>.<span class="pl-en">login</span>(<span class="pl-s"><span class="pl-pds">'</span>&lt;mode&gt;<span class="pl-pds">'</span></span>);</pre></div>
+
+<ul>
+<li>Refresh authentication<br>
+</li>
+</ul>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">auth</span>.<span class="pl-en">refresh</span>()</pre></div>
+
+<h3>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TODO:</h3>
+
+<ul>
+<li>Implement <code>netaccess</code> mode</li>
+<li>Implement <code>auto_refresh</code> so that the library itself will keep on refreshing authentication</li>
+<li>Improve error handling</li>
+<li>Make all methods <code>Promise</code>s</li>
+<li>Improve documentation</li>
+</ul>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
