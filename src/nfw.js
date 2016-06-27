@@ -1,4 +1,5 @@
 const rp = require('request-promise');
+const https = require('https');
 
 const agentOptions = {
     rejectUnauthorized: false
