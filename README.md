@@ -13,7 +13,7 @@ var IITMNetworkAuth = require('iitm-network-auth');
 
 - Initialise with username and password
 ```js
-var auth = new IITMNetworkAuth('<username'>, '<password>);
+var auth = new IITMNetworkAuth('<username'>, '<password>');
 ```
 
 - Login by specifying the method  
