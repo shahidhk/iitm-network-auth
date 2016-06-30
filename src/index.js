@@ -14,6 +14,10 @@ class IITMNetworkAuth {
         }
     }
 
+    set_credentials(username, password) {
+        this.authenticator._set_credentials(username, password);
+    }
+
     login(mode) {
         this.authenticator._login();
     }

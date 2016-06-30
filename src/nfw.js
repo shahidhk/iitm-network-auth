@@ -107,7 +107,7 @@ export default class NfwAuth {
                 auth.magic = magic;
                 auth.last_refreshed = Date.now();
                 console.log('Refreshed! at ', auth.last_refreshed, ' using ', magic);
-                auth.emitter.emit('refresh_log_in', {status: true, message: {magic: magic, timestamp: auth.last_refreshed}});
+                auth.emitter.emit('session_refresh', {status: true, message: {magic: magic, timestamp: auth.last_refreshed}});
             })
             .catch(e => {
                 console.log('error', e);
