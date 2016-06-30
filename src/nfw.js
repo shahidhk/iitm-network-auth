@@ -16,7 +16,7 @@ const KEEPALIVE_URL = `${FORTIGATE_URL}/keepalive?`
 const LOGOUT_URL = `${FORTIGATE_URL}/logout?` 
 
 const MAGIC_REGEX = /([0-9A-Fa-f]{16})/g;
-const REFRESH_INTERVAL = 10 * 1000;
+const REFRESH_INTERVAL = 9 * 60 * 1000;
 
 export default class NfwAuth {
 
