@@ -1,5 +1,8 @@
 const rp = require('request-promise');
 const https = require('https');
+const Emitter = require('emmett');
+
+const emitter = new Emitter();
 
 const agentOptions = {
     rejectUnauthorized: false
@@ -13,10 +16,17 @@ const KEEPALIVE_URL = `${FORTIGATE_URL}/keepalive?`
 const LOGOUT_URL = `${FORTIGATE_URL}/logout?` 
 
 const MAGIC_REGEX = /([0-9A-Fa-f]{16})/g;
+const REFRESH_INTERVAL = 10 * 1000;
 
 export default class NfwAuth {
 
     constructor(username, password) {
+        this.username = username;
+        this.password = password;
+        this.emitter = emitter;
+    }
+
+    _set_credentials(username, password) {
         this.username = username;
         this.password = password;
     }
@@ -64,20 +74,29 @@ export default class NfwAuth {
                 return rp(opts)
             })
             .then(res => { 
+                if (res.indexOf('Authentication Failed') != -1) {
+                    return Promise.reject("Incorrect credentials");
+                }
                 let magic = MAGIC_REGEX.exec(res)[0];
                 console.log(magic);
                 this.magic = magic;
                 this.logged_in = true;
+                this.emitter.emit('log_in', {status: true, message: magic});
             })
-            .catch(e => console.log('error', e));
+            .catch(e => {
+                console.log('error', e);
+                this.emitter.emit('error', {error: e});
+            });
     }
 
-    _refresh() {
-        if (!this.logged_in) {
+    _refresh(auth) {
+        
+        if (!auth.logged_in) {
             console.log('Not logged in!');
-            return
+            auth.emitter.emit('error', {error: "Not logged in"});
+            return;
         } 
-        let refresh_url = `${KEEPALIVE_URL}${this.magic}`;
+        let refresh_url = `${KEEPALIVE_URL}${auth.magic}`;
         let opts = {
             uri: refresh_url,
             agent: agent
@@ -85,14 +104,63 @@ export default class NfwAuth {
         rp(opts)
             .then(res => {
                 let magic = MAGIC_REGEX.exec(res)[0];
-                this.magic = magic;
-                console.log('Refreshed!', magic);
+                auth.magic = magic;
+                auth.last_refreshed = Date.now();
+                console.log('Refreshed! at ', auth.last_refreshed, ' using ', magic);
+                auth.emitter.emit('refresh_log_in', {status: true, message: {magic: magic, timestamp: auth.last_refreshed}});
             })
-            .catch(e => console.log('error', e));
+            .catch(e => {
+                console.log('error', e);
+                auth.emitter.emit('error', {error: e});
+            });
+    }
+
+    _start_auto_refresh() {
+        if (this.refresh_timer_running) {
+            this.emitter.emit('error', {error: "Refresh timer already running"});
+            return; 
+        }
+        this.refresh_timer = setInterval(this._refresh, REFRESH_INTERVAL, this); 
+        this.refresh_timer_running = true;
+        this.emitter.emit('refresh_timer', {running: this.refresh_timer_running});
+    }
+
+    _stop_auto_refresh() {
+        if (!this.refresh_timer_running) {
+            this.emitter.emit('error', {error: "Refresh timer is not running"});
+            return;
+        }
+        clearInterval(this.refresh_timer);
+        this.refresh_timer_running = false;
+        this.emitter.emit('refresh_timer', {running: this.refresh_timer_running});
     }
 
     _logout() {
-    
+        let opts = {
+            uri: LOGOUT_URL,
+            agent: agent,
+            followRedirect: false, 
+            resolveWithFullResponse: true, 
+            simple: false
+        }
+        rp(opts)
+            .then(res => {
+                if (res.statusCode == 303) {
+                    console.log("Logout successful!");
+                    this.last_refreshed = undefined;
+                    this.logged_in = false;
+                    if (this.refresh_timer_running) {
+                        this._stop_auto_refresh();
+                    }
+                    this.emitter.emit('log_out', {status: true, message: this.magic});
+                } else {
+                    return Promise.reject(res);
+                }
+            })
+            .catch(e => {
+                console.log('error', e);
+                this.emitter.emit('error', {error: e});
+            });
     }
 
 }
