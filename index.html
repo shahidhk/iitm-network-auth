@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Iitm-network-auth by shahidhk</title>
+    <title>iitm-network-auth by shahidhk</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/github-dark.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -31,7 +31,7 @@
 
       <section>
         <div id="title">
-          <h1>Iitm-network-auth</h1>
+          <h1>iitm-network-auth</h1>
           <p>Authentication library for IIT Madras campus network</p>
           <hr>
           <span class="credits left">Project maintained by <a href="https://github.com/shahidhk">shahidhk</a></span>
@@ -46,24 +46,26 @@
 <p>npm module to authenticate against the IIT Madras campus network using openLDAP credentials</p>
 
 <h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<pre><code>npm install iitm-network-auth --save
+</code></pre>
+
+<h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
 
-<ul>
-<li>Import the module<br>
-</li>
-</ul>
+<h3>
+<a id="import-the-module" class="anchor" href="#import-the-module" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Import the module</h3>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> IITMNetworkAuth <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>iitm-network-auth<span class="pl-pds">'</span></span>);</pre></div>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> IITMNetworkAuth <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>iitm-network-auth<span class="pl-pds">'</span></span>);
+</pre></div>
 
-<ul>
-<li>Initialise with username and password</li>
-</ul>
-
-<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> auth <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">IITMNetworkAuth</span>(<span class="pl-s"><span class="pl-pds">'</span>&lt;username&gt;<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>&lt;password&gt;<span class="pl-pds">'</span></span>);</pre></div>
+<h3>
+<a id="create-an-instance" class="anchor" href="#create-an-instance" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Create an instance</h3>
 
 <ul>
-<li>Login by specifying the method<br>
-Methods that are availabe: 
+<li>Initialise with username, password and mode of login<br>
+Modes that are availabe: 
 
 <ul>
 <li>
@@ -73,25 +75,100 @@ Methods that are availabe:
 </li>
 </ul>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-smi">auth</span>.<span class="pl-en">login</span>(<span class="pl-s"><span class="pl-pds">'</span>&lt;mode&gt;<span class="pl-pds">'</span></span>);</pre></div>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> auth <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">IITMNetworkAuth</span>(<span class="pl-s"><span class="pl-pds">'</span>&lt;username&gt;<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>&lt;password&gt;<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>&lt;mode&gt;<span class="pl-pds">'</span></span>);</pre></div>
 
-<ul>
-<li>Refresh authentication<br>
-</li>
-</ul>
+<h3>
+<a id="login" class="anchor" href="#login" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Login</h3>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">auth</span>.<span class="pl-en">login</span>();</pre></div>
+
+<h3>
+<a id="logout" class="anchor" href="#logout" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Logout</h3>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">auth</span>.<span class="pl-en">logout</span>();</pre></div>
+
+<h3>
+<a id="keep-the-session-alive" class="anchor" href="#keep-the-session-alive" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Keep the session alive</h3>
+
+<p>The module can keep an authentication session alive by sending request to keepalive url.<br>
+The current inteval is set to <code>9 minutes</code> as the firewall keeps a session for 10 minutes.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">auth</span>.<span class="pl-en">start_refresh</span>();</pre></div>
+
+<h3>
+<a id="stop-refreshing-the-session" class="anchor" href="#stop-refreshing-the-session" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Stop refreshing the session</h3>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">auth</span>.<span class="pl-en">stop_refresh</span>();</pre></div>
+
+<h3>
+<a id="refresh-the-session-manually" class="anchor" href="#refresh-the-session-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Refresh the session manually</h3>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-smi">auth</span>.<span class="pl-en">refresh</span>()</pre></div>
 
 <h3>
-<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TODO:</h3>
+<a id="get-login-status" class="anchor" href="#get-login-status" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Get login status</h3>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> logged_in <span class="pl-k">=</span> <span class="pl-smi">auth</span>.<span class="pl-en">is_logged_in</span>();</pre></div>
+
+<h3>
+<a id="event-listeners" class="anchor" href="#event-listeners" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Event listeners</h3>
+
+<p>The module emits events to denote certain actions as they happen. Any client code can subscribe to these events and take necessary actions  </p>
+
+<ul>
+<li>Get the event emitter<br>
+</li>
+</ul>
+
+<pre><code>var emitter = auth.get_emitter();
+</code></pre>
+
+<ul>
+<li>Add event listeners</li>
+</ul>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// do something when an error happens</span>
+<span class="pl-smi">emitter</span>.<span class="pl-en">on</span>(<span class="pl-s"><span class="pl-pds">'</span>error<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">e</span>) {
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">e</span>.<span class="pl-c1">data</span>); <span class="pl-c">// log error details to the console</span>
+});
+
+<span class="pl-c">// do something when a login happens</span>
+<span class="pl-smi">emitter</span>.<span class="pl-en">on</span>(<span class="pl-s"><span class="pl-pds">'</span>log_in<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">e</span>) {
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">e</span>.<span class="pl-c1">data</span>); <span class="pl-c">// log details to the console</span>
+});
+
+<span class="pl-c">// do something when a logout happens</span>
+<span class="pl-smi">emitter</span>.<span class="pl-en">on</span>(<span class="pl-s"><span class="pl-pds">'</span>log_out<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">e</span>) {
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">e</span>.<span class="pl-c1">data</span>); <span class="pl-c">// log details to the console</span>
+});
+
+<span class="pl-c">// do something when a session is refreshed</span>
+<span class="pl-smi">emitter</span>.<span class="pl-en">on</span>(<span class="pl-s"><span class="pl-pds">'</span>session_refresh<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">e</span>) {
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">e</span>.<span class="pl-c1">data</span>); <span class="pl-c">// log details to the console</span>
+});
+
+<span class="pl-c">// do something when a refresh timer is started/stopped</span>
+<span class="pl-smi">emitter</span>.<span class="pl-en">on</span>(<span class="pl-s"><span class="pl-pds">'</span>refresh_timer<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">e</span>) {
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">e</span>.<span class="pl-c1">data</span>.<span class="pl-smi">running</span>); <span class="pl-c">// log status to the consle (true/false)</span>
+});</pre></div>
+
+<h3>
+<a id="set-new-credentials" class="anchor" href="#set-new-credentials" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Set new credentials</h3>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">auth</span>.<span class="pl-en">set_credentials</span>(<span class="pl-s"><span class="pl-pds">'</span>&lt;username&gt;<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>&lt;password&gt;<span class="pl-pds">'</span></span>);</pre></div>
+
+<h2>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TODO:</h2>
 
 <ul>
 <li>Implement <code>netaccess</code> mode</li>
-<li>Implement <code>auto_refresh</code> so that the library itself will keep on refreshing authentication</li>
-<li>Improve error handling</li>
-<li>Make all methods <code>Promise</code>s</li>
 <li>Improve documentation</li>
 </ul>
+
+<h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing</h2>
+
+<p>Pull requests are welcome</p>
       </section>
 
     </div>
