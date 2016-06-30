@@ -1,6 +1,6 @@
 {
   "name": "iitm-network-auth",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Authentication library for IIT Madras network using openLDAP credentials",
   "main": "./dist/index.js",
   "scripts": {
@@ -13,7 +13,9 @@
   "keywords": [
     "iitm",
     "network",
-    "authtication",
+    "authentication",
+    "fortigate",
+    "netaccess",
     "firewall"
   ],
   "author": "Shahidh K Muhammed <shahidhkmuhammed@gmail.com>",
