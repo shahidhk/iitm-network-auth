@@ -43,7 +43,7 @@ class IITMNetworkAuth {
     }
 
     is_logged_in() {
-        return this.authenticatir.loggen_in;
+        return this.authenticator.logged_in;
     }
 
 }
