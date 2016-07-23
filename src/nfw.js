@@ -103,8 +103,7 @@ export default class NfwAuth {
         }
         rp(opts)
             .then(res => {
-                let magic = MAGIC_REGEX.exec(res)[0];
-                auth.magic = magic;
+                let magic = auth.magic;
                 auth.last_refreshed = Date.now();
                 console.log('Refreshed! at ', auth.last_refreshed, ' using ', magic);
                 auth.emitter.emit('session_refresh', {status: true, message: {magic: magic, timestamp: auth.last_refreshed}});

@@ -1,6 +1,6 @@
 {
   "name": "iitm-network-auth",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Authentication library for IIT Madras network using openLDAP credentials",
   "main": "./dist/index.js",
   "scripts": {
