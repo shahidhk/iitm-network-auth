@@ -78,13 +78,11 @@ export default class NfwAuth {
                     return Promise.reject("Incorrect credentials");
                 }
                 let magic = MAGIC_REGEX.exec(res)[0];
-                console.log(magic);
                 this.magic = magic;
                 this.logged_in = true;
                 this.emitter.emit('log_in', {status: true, message: magic});
             })
             .catch(e => {
-                console.log('error', e);
                 this.emitter.emit('error', {error: e});
             });
     }
@@ -92,7 +90,6 @@ export default class NfwAuth {
     _refresh(auth) {
         
         if (!auth.logged_in) {
-            console.log('Not logged in!');
             auth.emitter.emit('error', {error: "Not logged in"});
             return;
         } 
@@ -105,11 +102,9 @@ export default class NfwAuth {
             .then(res => {
                 let magic = auth.magic;
                 auth.last_refreshed = Date.now();
-                console.log('Refreshed! at ', auth.last_refreshed, ' using ', magic);
                 auth.emitter.emit('session_refresh', {status: true, message: {magic: magic, timestamp: auth.last_refreshed}});
             })
             .catch(e => {
-                console.log('error', e);
                 auth.emitter.emit('error', {error: e});
             });
     }
@@ -145,7 +140,6 @@ export default class NfwAuth {
         rp(opts)
             .then(res => {
                 if (res.statusCode == 303) {
-                    console.log("Logout successful!");
                     this.last_refreshed = undefined;
                     this.logged_in = false;
                     if (this.refresh_timer_running) {
@@ -157,7 +151,6 @@ export default class NfwAuth {
                 }
             })
             .catch(e => {
-                console.log('error', e);
                 this.emitter.emit('error', {error: e});
             });
     }
