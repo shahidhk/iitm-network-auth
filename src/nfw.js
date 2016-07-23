@@ -77,10 +77,14 @@ export default class NfwAuth {
                 if (res.indexOf('Authentication Failed') != -1) {
                     return Promise.reject("Incorrect credentials");
                 }
-                let magic = MAGIC_REGEX.exec(res)[0];
-                this.magic = magic;
-                this.logged_in = true;
-                this.emitter.emit('log_in', {status: true, message: magic});
+                try {
+                    let magic = MAGIC_REGEX.exec(res)[0];
+                    this.magic = magic;
+                    this.logged_in = true;
+                    this.emitter.emit('log_in', {status: true, message: magic});
+                } catch (err) {
+                    this.emitter.emit('log_in', {status: false, message: err});
+                }
             })
             .catch(e => {
                 this.emitter.emit('error', {error: e});
